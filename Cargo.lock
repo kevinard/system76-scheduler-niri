@@ -791,7 +791,6 @@ dependencies = [
  "colog",
  "log",
  "niri-ipc",
- "serde_json",
  "zbus",
 ]
 

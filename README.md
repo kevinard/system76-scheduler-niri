@@ -26,15 +26,11 @@ When focus or a valid PID is unavailable, the helper selects its own PID so the
 previous application does not retain the foreground preference. Window titles
 are not logged.
 
-The current selection is resent every ten seconds to recover after a scheduler
-daemon restart. Failed D-Bus calls retry after three seconds. An event-stream
-error exits with a failure status so a service manager can restart the helper.
+An event-stream or D-Bus error exits with a failure status so a service manager
+can restart the helper. It uses a single blocking event loop. If only the
+scheduler daemon restarts, restart the helper to resend the unchanged focus.
 
-The Rust toolchain is recorded in `rust-toolchain.toml`; rustup installs it when
-needed. The IPC dependency is pinned to Niri 26.04's API. Review this pin when updating
-Niri: new IPC event variants require a matching client library.
-
-Run `cargo test --locked`, `cargo fmt --check`, and
-`cargo clippy --locked --all-targets -- -D warnings` to validate changes.
-The integration test requires `dbus-daemon` and uses a private bus and a fake
-Niri socket; it never connects to the running desktop.
+The IPC dependency is pinned to Niri 26.04's API. Review it when updating Niri.
+Build with your configured Rust toolchain and Cargo.lock. Run `cargo test --locked`,
+`cargo fmt --check`, and `cargo clippy --locked --all-targets -- -D warnings`
+to validate changes.
